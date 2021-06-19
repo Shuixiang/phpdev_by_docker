@@ -1,0 +1,9 @@
+**/mysql/*
+!**/mysql/.gitkeep
+**/nginx/conf.d/*
+!**/nginx/conf.d/.gitkeep
+!**/nginx/conf.d/default.conf
+**/php/conf.d/*
+!**/php/conf.d/.gitkeep
+**/redis/data/*
+!**/redis/data/.gitkeep

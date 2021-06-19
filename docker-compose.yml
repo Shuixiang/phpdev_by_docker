@@ -1,0 +1,66 @@
+version: "3.9"
+
+networks:
+  common-net:
+    external: false
+
+services:
+  mysql:
+    image: mysql:8.0.25
+    privileged: true
+    container_name: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - common-net
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysqlconfig:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
+  
+  nginx:
+    image: nginx:1.21.0-alpine
+    privileged: true
+    container_name: nginx
+    networks:
+      - common-net
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+    environment:
+      - NGINX_PORT=80
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php
+  
+  php:
+    image: phpdev:8.0.7-swoole4.6.7-alpine3.13
+    privileged: true
+    container_name: php
+    networks:
+      - common-net
+    volumes:
+      - ./nginx/html:/var/www/html
+      - ./php:/usr/local/etc/php
+    restart: always
+    ports:
+      - "127.0.0.1:9000:9000"
+  
+  redis:
+    image: redis:6.2.4-alpine3.13
+    privileged: true
+    container_name: redis-server
+    networks:
+      - common-net
+    volumes:
+      - ./redis:/usr/local/etc/redis
+      - ./redis/data:/data
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: always
+    ports:
+      - "6379:6379"
