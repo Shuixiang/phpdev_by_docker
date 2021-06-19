@@ -39,7 +39,7 @@ services:
       - php
   
   php:
-    image: phpdev:8.0.7-swoole4.6.7-alpine3.13
+    image: shuixiang/phpdev:8.0.7-swoole4.6.7-alpine3.13
     privileged: true
     container_name: php
     networks:
@@ -50,6 +50,8 @@ services:
     restart: always
     ports:
       - "127.0.0.1:9000:9000"
+      - "127.0.0.1:8000-8100:8000-8100"
+      - "127.0.0.1:9500-9600:9500-9600"
   
   redis:
     image: redis:6.2.4-alpine3.13

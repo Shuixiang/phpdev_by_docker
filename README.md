@@ -5,7 +5,7 @@
 > **使用了这些镜像：**
 `mysql:8.0.25` 
 `nginx:1.21.0-alpine` 
-`phpdev:8.0.7-swoole4.6.7-alpine3.13（基于 php:8.0.7-fpm-alpine3.13 构建）` 
+`shuixiang/phpdev:8.0.7-swoole4.6.7-alpine3.13（基于 php:8.0.7-fpm-alpine3.13 构建）` 
 `redis:6.2.4-alpine3.13`
 
 ### PHP扩展列表
