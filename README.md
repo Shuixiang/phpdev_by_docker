@@ -87,3 +87,6 @@ docker-php-ext-install pdo_mysql
 ```
 docker-php-ext-enable swoole pdo_mysql
 ```
+
+### 使用composer和php命令
+建议进入 `php` 容器进行相关操作，保证环境统一进行验证等
