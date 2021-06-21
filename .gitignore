@@ -7,3 +7,4 @@
 !**/php/conf.d/.gitkeep
 **/redis/data/*
 !**/redis/data/.gitkeep
+.idea
