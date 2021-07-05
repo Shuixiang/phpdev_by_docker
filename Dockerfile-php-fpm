@@ -18,11 +18,11 @@ RUN echo http://mirrors.aliyun.com/alpine/v3.13/main > /etc/apk/repositories && 
     echo http://mirrors.aliyun.com/alpine/v3.13/community >> /etc/apk/repositories && \
     apk update && apk upgrade && set -eux; \
     apk add --virtual buildDeps ${PHPIZE_DEPS}
-RUN apk add freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libmcrypt-dev libzip libzip-dev libsodium libsodium-dev && \
+RUN apk add freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libmcrypt-dev libzip libzip-dev libsodium libsodium-dev openldap openldap-dev libxml2 libxml2-dev && \
     docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN pecl install redis-5.3.3 swoole-4.6.7 && \
-    docker-php-ext-install bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache && \
-    docker-php-ext-enable redis swoole bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache
+    docker-php-ext-install bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache ldap xml mysqli && \
+    docker-php-ext-enable redis swoole bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache ldap xml mysqli
 RUN wget https://mirrors.aliyun.com/composer/composer.phar -P /usr/local/bin && \
     mv /usr/local/bin/composer.phar /usr/local/bin/composer && \
     chmod +x /usr/local/bin/composer && \
