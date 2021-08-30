@@ -50,8 +50,21 @@ services:
       - /Users/shuixiang/workspace:/var/www/html
       - ./php/php.ini:/usr/local/etc/php/php.ini
     restart: always
-    ports:
-      - "127.0.0.1:9000:9000"
+    # ports:
+    #   - "127.0.0.1:9000:9000"
+
+  php74:
+    image: php:7.4.22-fpm
+    privileged: true
+    container_name: php74
+    networks:
+      - common-net
+    volumes:
+      - /Users/shuixiang/workspace:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php74/php.ini
+    restart: always
+    # ports:
+    #   - "127.0.0.1:9001:9000"
   
   redis:
     image: redis:6.2.4-alpine3.13
