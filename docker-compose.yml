@@ -15,7 +15,6 @@ services:
     networks:
       - common-net
     volumes:
-      - ./mysql-files:/var/lib/mysql-files
       - ./mysql:/var/lib/mysql
       - ./mysqlconfig/cnf:/etc/mysql/conf.d
       - ./mysqlconfig/my.cnf:/etc/mysql/my.cnf
