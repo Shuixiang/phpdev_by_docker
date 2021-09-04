@@ -1,0 +1,29 @@
+FROM php:7.4.23-fpm-alpine3.14
+ENV TIMEZONE Asia/Shanghai
+ENV PHP_MEMORY_LIMIT 512M
+ENV MAX_UPLOAD 50M
+ENV PHP_MAX_FILE_UPLOAD 200
+ENV PHP_MAX_POST 100M
+ENV PHPIZE_DEPS \ 
+ autoconf \ 
+ dpkg-dev dpkg \ 
+ file \ 
+ g++ \ 
+ gcc \ 
+ libc-dev \ 
+ make \ 
+ pkgconf \ 
+ re2c 
+RUN echo http://mirrors.aliyun.com/alpine/v3.13/main > /etc/apk/repositories && \
+    echo http://mirrors.aliyun.com/alpine/v3.13/community >> /etc/apk/repositories && \
+    apk update && apk upgrade && set -eux; \
+    apk add --virtual buildDeps ${PHPIZE_DEPS}
+RUN apk add freetype freetype-dev libpng libpng-dev libjpeg-turbo libjpeg-turbo-dev libmcrypt-dev libzip libzip-dev libsodium libsodium-dev openldap openldap-dev libxml2 libxml2-dev && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN pecl install redis-5.3.3 swoole-4.6.7 && \
+    docker-php-ext-install bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache ldap xml exif && \
+    docker-php-ext-enable redis swoole bcmath pdo_mysql gd mysqli zip pcntl sockets sodium sysvmsg sysvshm opcache ldap xml exif
+RUN wget https://mirrors.aliyun.com/composer/composer.phar -P /usr/local/bin && \
+    mv /usr/local/bin/composer.phar /usr/local/bin/composer && \
+    chmod +x /usr/local/bin/composer && \
+    composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/

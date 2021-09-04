@@ -54,7 +54,7 @@ services:
     #   - "127.0.0.1:9000:9000"
 
   php74:
-    image: php:7.4.22-fpm
+    image: shuixiang/phpdev:7.4.23-swoole4.6.7-alpine3.14
     privileged: true
     container_name: php74
     networks:
